@@ -14,12 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.async.StandardServletAsyncWebRequest;
 
 import previsao.tempo.server.core.spring.context.ManagerInstance;
 import previsao.tempo.server.crud.user.service.UserAuthenticationService;
@@ -104,45 +98,45 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 
-        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-        httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
-        httpResponse.setHeader("Access-Control-Max-Age", "3600");
-        httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        if (httpRequest.getMethod().equalsIgnoreCase("options")) {
-            return;
-        }
-        if (!((httpRequest.getMethod().equalsIgnoreCase(HttpMethod.POST.name()) ||
-        		httpRequest.getMethod().equalsIgnoreCase(HttpMethod.GET.name())) &&
-                	httpRequest.getRequestURI().contains(new StringBuffer("auth")))){
-            // Get the HTTP Authorization header from the request
-            String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
-
-            // Check if the HTTP Authorization header is present and formatted correctly
-            if (authorizationHeader == null) {
-                String origin = httpRequest.getHeader("Origin");
-                httpResponse.sendRedirect(origin != null && !origin.isEmpty()? origin + "/login" : "/login");
-                return;
-            }
-
-            // Extract the token from the HTTP Authorization header
-            String token = authorizationHeader.trim();
-
-            try {
-                // Validate the token
-                if (!validateToken(token)) {
-
-                    String origin = httpRequest.getHeader("Origin");
-                    httpResponse.sendRedirect(origin != null && !origin.isEmpty()? origin + "/login" : "/login");
-                    return;
-                }
-                RequestContextHolder.setRequestAttributes(new StandardServletAsyncWebRequest(httpRequest, httpResponse), true);
-                RequestContextHolder.getRequestAttributes().setAttribute("token", token, WebRequest.SCOPE_REQUEST);
-            } catch (Exception e) {
-                e.printStackTrace();
-                httpResponse.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
-                return;
-            }
-        }
+//        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+//        httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+//        httpResponse.setHeader("Access-Control-Max-Age", "3600");
+//        httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+//        if (httpRequest.getMethod().equalsIgnoreCase("options")) {
+//            return;
+//        }
+//        if (!((httpRequest.getMethod().equalsIgnoreCase(HttpMethod.POST.name()) ||
+//        		httpRequest.getMethod().equalsIgnoreCase(HttpMethod.GET.name())) &&
+//                	httpRequest.getRequestURI().contains(new StringBuffer("auth")))){
+//            // Get the HTTP Authorization header from the request
+//            String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+//
+//            // Check if the HTTP Authorization header is present and formatted correctly
+//            if (authorizationHeader == null) {
+//                String origin = httpRequest.getHeader("Origin");
+//                httpResponse.sendRedirect(origin != null && !origin.isEmpty()? origin + "/login" : "/login");
+//                return;
+//            }
+//
+//            // Extract the token from the HTTP Authorization header
+//            String token = authorizationHeader.trim();
+//
+//            try {
+//                // Validate the token
+//                if (!validateToken(token)) {
+//
+//                    String origin = httpRequest.getHeader("Origin");
+//                    httpResponse.sendRedirect(origin != null && !origin.isEmpty()? origin + "/login" : "/login");
+//                    return;
+//                }
+//                RequestContextHolder.setRequestAttributes(new StandardServletAsyncWebRequest(httpRequest, httpResponse), true);
+//                RequestContextHolder.getRequestAttributes().setAttribute("token", token, WebRequest.SCOPE_REQUEST);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                httpResponse.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+//                return;
+//            }
+//        }
         chain.doFilter(request, response);
     }
 

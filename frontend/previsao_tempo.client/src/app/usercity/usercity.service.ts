@@ -29,20 +29,20 @@ export class UserCityService {
      * Listar todas as tarefas.
      */
     public searchCities() : Promise<CityDTO[]> {
-        return this.httpService.get('/city');
+        return this.httpService.get('/cities');
     }
 
     /**
      * Deletar uma tarefa.
      */
     public delete(userCity: UserCityDTO) : Promise<UserCityDTO[]> {
-        return this.httpService.delete('/usercity', userCity);
+        return this.httpService.delete('/usercities', userCity);
     }
 
     /**
      * Salvar uma tarefa.
      */
     public save(userCity: UserCityDTO) : Promise<UserCityDTO> {
-        return this.httpService.post('/usercity', userCity);
+        return this.httpService.post('/usercities', userCity);
     }
 }

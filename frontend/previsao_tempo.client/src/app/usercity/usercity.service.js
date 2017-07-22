@@ -37,19 +37,19 @@ var UserCityService = (function () {
      * Listar todas as tarefas.
      */
     UserCityService.prototype.searchCities = function () {
-        return this.httpService.get('/city');
+        return this.httpService.get('/cities');
     };
     /**
      * Deletar uma tarefa.
      */
     UserCityService.prototype.delete = function (userCity) {
-        return this.httpService.delete('/usercity', userCity);
+        return this.httpService.delete('/usercities', userCity);
     };
     /**
      * Salvar uma tarefa.
      */
     UserCityService.prototype.save = function (userCity) {
-        return this.httpService.post('/usercity', userCity);
+        return this.httpService.post('/usercities', userCity);
     };
     return UserCityService;
 }());
