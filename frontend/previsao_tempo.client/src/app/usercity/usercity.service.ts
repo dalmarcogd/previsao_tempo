@@ -22,7 +22,7 @@ export class UserCityService {
      * Listar todas as tarefas.
      */
     public list() : Promise<UserCityDTO[]> {
-        return this.httpService.get('/usercity');
+        return this.httpService.get('/usercities');
     }
 
     /**

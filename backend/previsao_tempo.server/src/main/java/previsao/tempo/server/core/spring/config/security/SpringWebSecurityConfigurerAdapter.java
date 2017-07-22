@@ -1,5 +1,7 @@
 package previsao.tempo.server.core.spring.config.security;
 
+import java.util.Arrays;
+
 import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import previsao.tempo.server.core.hibernate.config.HibernateConfig;
 import previsao.tempo.server.core.hibernate.transaction.CustomHibernateTransactionManager;
@@ -21,7 +25,6 @@ import previsao.tempo.server.core.hibernate.transaction.CustomHibernateTransacti
  *
  * @author Guilherme Dalmarco (dalmarco.gd@gmail.com)
  */
-@EnableWebMvc
 @EnableTransactionManagement
 @EnableWebSecurity
 @Configuration
@@ -32,23 +35,27 @@ public class SpringWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-          	.withUser("test").password("123456").roles("USER");
+          	.withUser("chester").password("123456").roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 		http.cors()
-//		.configurationSource(request -> {
-//			CorsConfiguration corsConfiguration = new CorsConfiguration();
-//			corsConfiguration.addAllowedOrigin("*");
-//			corsConfiguration.addAllowedMethod("POST, GET, PUT, DELETE");
-//			corsConfiguration.setMaxAge(3600L);
-//			corsConfiguration.addAllowedHeader("Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-//			return corsConfiguration;
-//		})
-		.and()
-		.authorizeRequests().antMatchers("/oauth/token").permitAll();
+			.and()
+			.authorizeRequests().antMatchers("/oauth/token").permitAll()
+			;
     }
+
+    @Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("POST, GET, PUT, DELETE"));
+//		configuration.setAllowedHeaders(Arrays.asList("Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
     //Create a transaction manager
     @Bean

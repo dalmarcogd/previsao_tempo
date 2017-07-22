@@ -31,7 +31,7 @@ var UserCityService = (function () {
      * Listar todas as tarefas.
      */
     UserCityService.prototype.list = function () {
-        return this.httpService.get('/usercity');
+        return this.httpService.get('/usercities');
     };
     /**
      * Listar todas as tarefas.
