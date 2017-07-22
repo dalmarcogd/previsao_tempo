@@ -4,8 +4,8 @@
 import { RouterModule } from '@angular/router';
 
 export const routes = [
-  {path: '', redirectTo: 'tasks', pathMatch: 'full'},
-  {path: 'tasks', loadChildren: 'app/tasks/tasks.module#TasksModule' },
+  {path: '', redirectTo: 'usercity', pathMatch: 'full'},
+  {path: 'usercity', loadChildren: 'app/usercity/usercity.module#UserCityModule' },
   {path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
   {path: 'users', loadChildren: 'app/users/users.module#UsersModule' },
   {path: '**', redirectTo: 'tasks', pathMatch: 'full'}

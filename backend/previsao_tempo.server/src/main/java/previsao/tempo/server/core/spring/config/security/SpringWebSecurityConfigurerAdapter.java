@@ -1,7 +1,6 @@
 package previsao.tempo.server.core.spring.config.security;
 
 import org.hibernate.internal.SessionFactoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -30,44 +28,26 @@ import previsao.tempo.server.core.hibernate.transaction.CustomHibernateTransacti
 @ComponentScan(basePackages = "previsao.tempo.server")
 public class SpringWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    @Autowired
-    private SavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-          .withUser("temporary").password("temporary").roles("ADMIN")
-          .and()
-          .withUser("user").password("userPass").roles("USER");
+          	.withUser("test").password("123456").roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-        .csrf().disable()
-        .exceptionHandling()
-        .authenticationEntryPoint(restAuthenticationEntryPoint)
-        .and()
-        .authorizeRequests()
-        .antMatchers("/**").authenticated()
-        .and()
-        .formLogin()
-        .successHandler(authenticationSuccessHandler)
-        .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-        .and()
-        .logout();
-    }
-
-    @Bean
-    public SavedRequestAwareAuthenticationSuccessHandler mySuccessHandler(){
-        return new SavedRequestAwareAuthenticationSuccessHandler();
-    }
-    @Bean
-    public SimpleUrlAuthenticationFailureHandler myFailureHandler(){
-        return new SimpleUrlAuthenticationFailureHandler();
+		http.cors()
+//		.configurationSource(request -> {
+//			CorsConfiguration corsConfiguration = new CorsConfiguration();
+//			corsConfiguration.addAllowedOrigin("*");
+//			corsConfiguration.addAllowedMethod("POST, GET, PUT, DELETE");
+//			corsConfiguration.setMaxAge(3600L);
+//			corsConfiguration.addAllowedHeader("Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+//			return corsConfiguration;
+//		})
+		.and()
+		.authorizeRequests().antMatchers("/oauth/token").permitAll();
     }
 
     //Create a transaction manager

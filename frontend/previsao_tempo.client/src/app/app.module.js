@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ng_lightning_1 = require("ng-lightning");
 var ng2_smart_table_1 = require("ng2-smart-table");
-var tasks_service_1 = require("./tasks/tasks.service");
+var usercity_service_1 = require("./usercity/usercity.service");
 var token_service_1 = require("./service/token/token.service");
 var message_service_1 = require("./service/message/message.service");
 var application_error_handler_1 = require("./service/error/application.error.handler");
@@ -49,7 +49,7 @@ AppModule = __decorate([
             application_error_handler_1.ApplicationErrorHandler,
             message_service_1.MessageService,
             token_service_1.TokenService,
-            tasks_service_1.TasksService],
+            usercity_service_1.UserCityService],
         bootstrap: [app_component_1.AppComponent]
     }),
     __metadata("design:paramtypes", [core_1.Injector])

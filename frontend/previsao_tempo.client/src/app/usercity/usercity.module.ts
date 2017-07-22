@@ -29,7 +29,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
-    
   ]
 })
-export class TasksModule { }
+export class UserCityModule { }

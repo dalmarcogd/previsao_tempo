@@ -79,8 +79,8 @@ export class HttpService {
    * Método para criação padronizada do RequestOptions
    */
   private buildRequestOptions(headers: HttpHeaders, config?: HttpConfigMethod) : RequestOptions {
-    let options = new RequestOptions({headers: headers, body: JSON.stringify(config.data), params: new URLSearchParams()});
-    if(!!config.params) {
+    let options = new RequestOptions({headers: headers, body: !!config && !!config.data? JSON.stringify(config.data) : null, params: new URLSearchParams()});
+    if(!!config && !!config.params) {
       config.params.forEach((value: any, key: string) => {
         options.params.set(key, value);
       }); 

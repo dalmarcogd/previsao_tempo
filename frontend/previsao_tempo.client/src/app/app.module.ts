@@ -1,6 +1,6 @@
 import { NglModule } from 'ng-lightning';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { TasksService } from './tasks/tasks.service';
+import { UserCityService } from './usercity/usercity.service';
 import { TokenService } from './service/token/token.service';
 import { MessageService } from './service/message/message.service';
 import { ApplicationErrorHandler } from './service/error/application.error.handler';
@@ -34,7 +34,7 @@ import { AppComponent } from './app.component';
               ApplicationErrorHandler,
               MessageService,
               TokenService,
-              TasksService],
+              UserCityService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
