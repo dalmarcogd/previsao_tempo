@@ -1,0 +1,9 @@
+#contentBarTop {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #ffffff;
+    height: 10%;
+    border-bottom: 1px solid lightgray;
+    min-height: 95px;
+}
