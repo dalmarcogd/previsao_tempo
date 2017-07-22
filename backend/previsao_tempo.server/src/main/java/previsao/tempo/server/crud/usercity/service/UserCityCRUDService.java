@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 
 import previsao.tempo.server.crud.base.repository.AbstractCRUDRepository;
 import previsao.tempo.server.crud.base.service.AbstractCRUDService;
-import previsao.tempo.server.crud.user.service.UserAuthenticationService;
+import previsao.tempo.server.crud.city.service.CityCRUDService;
+import previsao.tempo.server.crud.user.service.UserCRUDService;
 import previsao.tempo.server.crud.user.service.UserQueryService;
 import previsao.tempo.server.crud.usercity.repository.UserCityCRUDRepository;
 import previsao.tempo.server.model.base.BaseDTO;
@@ -23,9 +24,11 @@ public class UserCityCRUDService extends AbstractCRUDService<UserCityEntity, Use
     @Autowired
     private UserCityCRUDRepository userCityCRUDRepository;
     @Autowired
-    private UserQueryService userQueryService;
+    private CityCRUDService cityCRUDService;
     @Autowired
-    private UserAuthenticationService userAuthenticationService;
+    private UserCRUDService userCRUDService;
+    @Autowired
+    private UserQueryService userQueryService;
 
     /**
      * {@inheritDoc}
@@ -45,6 +48,12 @@ public class UserCityCRUDService extends AbstractCRUDService<UserCityEntity, Use
     public UserCityEntity convertToEntity(UserCityDTO dto, UserCityEntity entity) {
     	entity.setId(dto.getId());
     	entity.setVersion(dto.getVersion());
+    	if (dto.getCity() != null) {
+    		entity.setCity(cityCRUDService.getEntity(dto.getCity().getId()));
+		}
+    	if (dto.getUser() != null) {
+    		entity.setUser(userCRUDService.getEntity(dto.getUser().getId()));
+		}
         return entity;
     }
 
@@ -58,6 +67,12 @@ public class UserCityCRUDService extends AbstractCRUDService<UserCityEntity, Use
     public UserCityDTO convertToDTO(UserCityEntity entity, UserCityDTO dto) {
     	dto.setId(entity.getId());
     	dto.setVersion(entity.getVersion());
+    	if (entity.getCity() != null) {
+    		dto.setCity(cityCRUDService.getDTO(entity.getCity().getId()));
+		}
+    	if (entity.getUser() != null) {
+    		dto.setUser(userCRUDService.getDTO(entity.getUser().getId()));
+		}
         return dto;
     }
 

@@ -58,8 +58,7 @@ public abstract class AbstractCRUDService<E extends BaseEntity, O extends BaseDT
      */
     @Transactional(rollbackFor = Throwable.class, readOnly = true)
     public O getDTO(Long id) {
-    	E e = this.getEntity(id);
-        return convertToDTO(e);
+        return convertToDTO(this.getEntity(id));
     }
 
     /**
@@ -67,8 +66,17 @@ public abstract class AbstractCRUDService<E extends BaseEntity, O extends BaseDT
      * @return {@link List} of {@link E}
      */
     @Transactional(rollbackFor = Throwable.class, readOnly = true)
-    public List<E> getAll() {
+    public List<E> getEntities() {
         return getCRUDRepository().getAll();
+    }
+
+    /**
+     * Busca todas as entidades e converte para dto
+     * @return {@link List} of {@link O}
+     */
+    @Transactional(rollbackFor = Throwable.class, readOnly = true)
+    public List<O> getDTOs() {
+        return convertAllToDTO(getEntities());
     }
 
     /**

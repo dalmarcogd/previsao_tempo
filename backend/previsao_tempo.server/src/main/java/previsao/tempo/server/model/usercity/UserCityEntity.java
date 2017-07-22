@@ -74,4 +74,20 @@ public class UserCityEntity extends BaseEntity {
 	public void setCity(CityEntity city) {
 		this.city = city;
 	}
+
+	/**
+	 * Retorna uma instancia de {@link UserEntity}
+	 * @return {@link UserEntity}
+	 */
+	public UserEntity getUser() {
+		return user;
+	}
+
+	/**
+	 * Atribui um {@link UserEntity}
+	 * @param user - {@link UserEntity}
+	 */
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
 }

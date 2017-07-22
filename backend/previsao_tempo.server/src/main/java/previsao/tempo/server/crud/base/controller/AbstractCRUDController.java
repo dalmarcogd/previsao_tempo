@@ -95,7 +95,7 @@ public abstract class AbstractCRUDController<O extends BaseDTO, E extends BaseEn
      */
     @GetMapping("/{id}")
     public @ResponseBody ResponseEntity<?> read(@PathVariable(value = "id") Long id){
-        return ResponseEntity.ok(getService().convertToDTO(getService().getEntity(id), getService().createEmptyDTO()));
+        return ResponseEntity.ok(getService().getDTO(id));
     }
 
     /**
@@ -104,7 +104,7 @@ public abstract class AbstractCRUDController<O extends BaseDTO, E extends BaseEn
      */
     @GetMapping
     public @ResponseBody ResponseEntity<?> read(){
-        return ResponseEntity.ok(getService().convertAllToDTO(getService().getAll()));
+        return ResponseEntity.ok(getService().getDTOs());
     }
 
     /**
