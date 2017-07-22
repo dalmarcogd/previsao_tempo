@@ -58,7 +58,7 @@ public abstract class AbstractCRUDController<O extends BaseDTO, E extends BaseEn
         AbstractCRUDService<E, O> service = getService();
         if (dto != null && dto.getId() != null) {
             try {
-                E entityOld = service.get(dto.getId());
+                E entityOld = service.getEntity(dto.getId());
                 E entityChanged = service.convertToEntity(dto, entityOld);
                 E entityUpdated = service.save(entityChanged);
                 return ResponseEntity.ok(service.convertToDTO(entityUpdated, getService().createEmptyDTO()));
@@ -95,7 +95,7 @@ public abstract class AbstractCRUDController<O extends BaseDTO, E extends BaseEn
      */
     @GetMapping("/{id}")
     public @ResponseBody ResponseEntity<?> read(@PathVariable(value = "id") Long id){
-        return ResponseEntity.ok(getService().convertToDTO(getService().get(id), getService().createEmptyDTO()));
+        return ResponseEntity.ok(getService().convertToDTO(getService().getEntity(id), getService().createEmptyDTO()));
     }
 
     /**

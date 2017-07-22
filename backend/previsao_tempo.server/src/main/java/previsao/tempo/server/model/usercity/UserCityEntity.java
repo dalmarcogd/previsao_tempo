@@ -30,7 +30,7 @@ public class UserCityEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "state_id", nullable = false)
+    @Column(name = "user_city_id", nullable = false)
     private Long id;
 
     @NotNull

@@ -1,4 +1,4 @@
-package previsao.tempo.server.crud.usercity.controller;
+package previsao.tempo.server.crud.city.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,8 @@ import org.springframework.web.context.request.WebRequest;
 import previsao.tempo.server.core.spring.context.ManagerInstance;
 import previsao.tempo.server.crud.base.controller.AbstractCRUDController;
 import previsao.tempo.server.crud.base.service.AbstractCRUDService;
+import previsao.tempo.server.crud.state.service.StateCRUDService;
+import previsao.tempo.server.crud.state.service.StateQueryService;
 import previsao.tempo.server.crud.usercity.service.UserCityCRUDService;
 import previsao.tempo.server.crud.usercity.service.UserCityQueryService;
 import previsao.tempo.server.model.usercity.UserCityDTO;
@@ -23,8 +25,8 @@ import previsao.tempo.server.model.usercity.UserCityEntity;
  * @author Guilherme Dalmarco (dalmarco.gd@gmail.com)
  */
 @RestController
-@RequestMapping("/usercities")
-public class UserCityCRUDController extends AbstractCRUDController<UserCityDTO, UserCityEntity> {
+@RequestMapping("/cities")
+public class CityCRUDController extends AbstractCRUDController<UserCityDTO, UserCityEntity> {
 
     private UserCityCRUDService userCRUDService;
     private UserCityQueryService userCityQueryService;

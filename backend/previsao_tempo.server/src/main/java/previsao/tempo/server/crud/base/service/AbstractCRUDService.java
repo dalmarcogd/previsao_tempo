@@ -47,8 +47,19 @@ public abstract class AbstractCRUDService<E extends BaseEntity, O extends BaseDT
      * @return {@link E} - salvo ou null caso não encontrar.
      */
     @Transactional(rollbackFor = Throwable.class, readOnly = true)
-    public E get(Long id) {
+    public E getEntity(Long id) {
         return getCRUDRepository().get(id);
+    }
+
+    /**
+     * Busca a entidade a partir do id e converte para dto.
+     * @param id - {@link E#getId()}
+     * @return {@link O} - salvo ou null caso não encontrar.
+     */
+    @Transactional(rollbackFor = Throwable.class, readOnly = true)
+    public O getDTO(Long id) {
+    	E e = this.getEntity(id);
+        return convertToDTO(e);
     }
 
     /**
@@ -77,7 +88,7 @@ public abstract class AbstractCRUDService<E extends BaseEntity, O extends BaseDT
      */
     @Transactional(rollbackFor = Throwable.class)
     public void deleteById(Long id) throws ValidationException {
-        delete(get(id));
+        delete(getEntity(id));
     }
 
     /**

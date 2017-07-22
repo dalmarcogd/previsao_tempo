@@ -22,8 +22,8 @@ public class UserCRUDController extends AbstractCRUDController<UserDTO, UserEnti
     private UserCRUDService userCRUDService;
 
     /**
-     * Retorna o userCRUDService - {@link UserCityCRUDService}
-     * @return {@link UserCityCRUDService}
+     * Retorna o userCRUDService - {@link StateCRUDService}
+     * @return {@link StateCRUDService}
      */
     public UserCRUDService getUserCRUDService() {
         if (userCRUDService == null) {
