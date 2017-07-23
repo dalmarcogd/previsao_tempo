@@ -51,8 +51,8 @@ public class UserCityCRUDService extends AbstractCRUDService<UserCityEntity, Use
     	if (dto.getCity() != null) {
     		entity.setCity(cityCRUDService.getEntity(dto.getCity().getId()));
 		}
-    	if (dto.getUser() != null) {
-    		entity.setUser(userCRUDService.getEntity(dto.getUser().getId()));
+    	if (dto.getUsername() != null) {
+    		entity.setUser(userQueryService.getUserByUsername(dto.getUsername()));
 		}
         return entity;
     }
@@ -71,7 +71,7 @@ public class UserCityCRUDService extends AbstractCRUDService<UserCityEntity, Use
     		dto.setCity(cityCRUDService.getDTO(entity.getCity().getId()));
 		}
     	if (entity.getUser() != null) {
-    		dto.setUser(userCRUDService.getDTO(entity.getUser().getId()));
+    		dto.setUsername(entity.getUser().getUsername());
 		}
         return dto;
     }

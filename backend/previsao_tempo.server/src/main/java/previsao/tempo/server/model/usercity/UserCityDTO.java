@@ -2,7 +2,6 @@ package previsao.tempo.server.model.usercity;
 
 import previsao.tempo.server.model.base.BaseDTO;
 import previsao.tempo.server.model.city.CityDTO;
-import previsao.tempo.server.model.user.UserDTO;
 
 /**
  * Representa um {@link UserCityEntity}.
@@ -11,23 +10,23 @@ import previsao.tempo.server.model.user.UserDTO;
  */
 public class UserCityDTO extends BaseDTO {
 
-	private UserDTO user;
+	private String username;
 	private CityDTO city;
 
 	/**
-	 * Retorna uma instancia de {@link UserDTO}
-	 * @return {@link UserDTO}
+	 * Retorna uma instancia de {@link String}
+	 * @return {@link String}
 	 */
-	public UserDTO getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
-	 * Atribui um {@link UserDTO}
-	 * @param user - {@link UserDTO}
+	 * Atribui um {@link String}
+	 * @param username - {@link String}
 	 */
-	public void setUser(UserDTO user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**

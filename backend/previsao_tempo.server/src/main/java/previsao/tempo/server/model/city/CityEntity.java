@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import previsao.tempo.server.model.base.BaseEntity;
 import previsao.tempo.server.model.state.StateEntity;
+import previsao.tempo.server.model.usercity.UserCityEntity;
 
 /**
  * Define uma tarfe da aplicação.
@@ -24,6 +25,7 @@ import previsao.tempo.server.model.state.StateEntity;
 @Table(name = "city")
 public class CityEntity extends BaseEntity {
 
+	public static final String NAME = "name";
 	public static final String STATE = "state";
 
 	@Id

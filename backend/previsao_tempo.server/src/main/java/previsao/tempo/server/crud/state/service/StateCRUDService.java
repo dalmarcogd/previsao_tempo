@@ -41,6 +41,7 @@ public class StateCRUDService extends AbstractCRUDService<StateEntity, StateDTO>
     public StateEntity convertToEntity(StateDTO dto, StateEntity entity) {
     	entity.setId(dto.getId());
     	entity.setVersion(dto.getVersion());
+    	entity.setName(dto.getName());
         return entity;
     }
 
@@ -54,6 +55,7 @@ public class StateCRUDService extends AbstractCRUDService<StateEntity, StateDTO>
     public StateDTO convertToDTO(StateEntity entity, StateDTO dto) {
     	dto.setId(entity.getId());
     	dto.setVersion(entity.getVersion());
+    	dto.setName(entity.getName());
         return dto;
     }
 
