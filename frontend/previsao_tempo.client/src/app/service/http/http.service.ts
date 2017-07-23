@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { HttpConfigMethod } from './http.config.method';
 import { ApplicationError } from './../error/application.error';
 import { TokenService } from './../token/token.service';
@@ -34,45 +35,45 @@ export class HttpService {
   /**
    * Realiza um put no endereço especificado.
    */
-  public delete(url: string, config?: HttpConfigMethod): Promise<any> {
+  public delete(url: string, config?: HttpConfigMethod): Observable<any> {
     let headers = this.getConfigHeaders();
     let finalURL = this.formatURL(url);
     console.log('Method delete: ' + finalURL);
     let options = this.buildRequestOptions(headers, config);
-    return this.http.delete(URL_SERVER + '' + url, options).toPromise().then(this.extractData).catch((e) => this.handleError(e));
+    return this.http.delete(URL_SERVER + '' + url, options).map(this.extractData).catch((error:any) => this.handleError(error));
   }
 
   /**
    * Realiza um put no endereço especificado.
    */
-  public get(url: string, config?: HttpConfigMethod): Promise<any> {
+  public get(url: string, config?: HttpConfigMethod): Observable<any> {
     let headers = this.getConfigHeaders();
     let finalURL = this.formatURL(url);
     console.log('Method get: ' + finalURL);
     let options = this.buildRequestOptions(headers, config);
-    return this.http.get(URL_SERVER + '' + url, options).toPromise().then(this.extractData).catch((e) => this.handleError(e));
+    return this.http.get(URL_SERVER + '' + url, options).map(this.extractData).catch((error:any) => this.handleError(error));
   }
 
   /**
    * Realiza um put no endereço especificado.
    */
-  public put(url: string, config?: HttpConfigMethod): Promise<any> {
+  public put(url: string, config?: HttpConfigMethod): Observable<any> {
     let headers = this.getConfigHeaders();
     let finalURL = this.formatURL(url);
     console.log('Method put: ' + finalURL);
     let options = this.buildRequestOptions(headers, config);    
-    return this.http.put(URL_SERVER + '' + url, { name }, options).toPromise().then(this.extractData).catch((e) => this.handleError(e));
+    return this.http.put(URL_SERVER + '' + url, { name }, options).map(this.extractData).catch((error:any) => this.handleError(error));
   }
 
   /**
    * Realiza um post no endereço especificado.
    */
-  public post(url: string, config?: HttpConfigMethod): Promise<any> {
+  public post(url: string, config?: HttpConfigMethod): Observable<any> {
     let headers = this.getConfigHeaders();
     let finalURL = this.formatURL(url);
     console.log('Method post: ' + finalURL);
     let options = this.buildRequestOptions(headers, config);
-    return this.http.post(finalURL, { name }, options).toPromise().then(this.extractData).catch((e) => this.handleError(e));
+    return this.http.post(finalURL, { name }, options).map(this.extractData).catch((error:any) => this.handleError(error));
   }
 
   /**
@@ -106,7 +107,8 @@ export class HttpService {
     return res.json();
   }
 
-  private handleError(error: Response | any) {
+  private handleError(error: Response | any) : Observable<any> {
     ServiceLocator.get(ApplicationErrorHandler).handleError(error);
+    return Observable.throw(error);
   }
 }

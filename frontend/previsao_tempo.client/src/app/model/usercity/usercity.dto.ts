@@ -7,6 +7,8 @@ import {BaseDTO} from "../base/base.dto";
  */
 export class UserCityDTO extends BaseDTO {
 
-  user: UserDTO = null;
+  username: string = null;
   city: CityDTO = null;
+  cityname: string = null;
+  
 }

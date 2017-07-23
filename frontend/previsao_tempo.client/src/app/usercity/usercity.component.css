@@ -2,8 +2,21 @@
     height: 100%;
     width: 100%;
     position: relative;
-    background-color: #ffffff;
     height: 10%;
-    border-bottom: 1px solid lightgray;
+    background-color: gainsboro;
     min-height: 95px;
+    margin-bottom: 30px;
+}
+
+#contentBarTop p {
+    text-align: center;
+    padding: 2%;
+    font-size: 30px;
+    color: darkblue;
+}
+
+#table {}
+
+#bodyModal {
+    height: 100%;
 }

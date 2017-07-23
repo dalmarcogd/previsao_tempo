@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var auth_guard_1 = require("./service/auth/auth.guard");
 var ng_lightning_1 = require("ng-lightning");
 var ng2_smart_table_1 = require("ng2-smart-table");
 var usercity_service_1 = require("./usercity/usercity.service");
@@ -49,7 +50,8 @@ AppModule = __decorate([
             application_error_handler_1.ApplicationErrorHandler,
             message_service_1.MessageService,
             token_service_1.TokenService,
-            usercity_service_1.UserCityService],
+            usercity_service_1.UserCityService,
+            auth_guard_1.AuthGuard],
         bootstrap: [app_component_1.AppComponent]
     }),
     __metadata("design:paramtypes", [core_1.Injector])

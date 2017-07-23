@@ -1,12 +1,13 @@
+import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import { ServiceLocator } from './../locator/service.locator';
 import { HttpService } from './../http/http.service';
 import { Injectable } from '@angular/core';
 import { TokenDTO } from '../../model/token/token.dto';
-/**
- * Created by Guilherme on 07/04/2017.
- */
 
+/**
+ * Serviço que gerencia o token do usuario
+ */
 const TOKEN: string = 'token';
 const DATE_TOKEN: string = 'datetoken';
 
@@ -36,15 +37,15 @@ export class TokenService {
   /**
    * Retorna o token to usuário
    */
-  public isTokenValid(): Promise<boolean> {
+  public isTokenValid(): Observable<boolean> {
       let tokenDTO: any = JSON.parse(localStorage.getItem(TOKEN));
 
       let value: any = !!tokenDTO? tokenDTO.token : null;
       if (!!value) {
         console.log("Valiando: "+value);
-        return this.httpService.put('/auth', new ValidToken(value));
+        return this.httpService.put('/auth', {data: new ValidToken(value)});
       }
-      return new Promise(() => false);
+      return Observable.create(() => false);
   }
 
   /**

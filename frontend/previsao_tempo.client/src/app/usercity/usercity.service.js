@@ -34,22 +34,29 @@ var UserCityService = (function () {
         return this.httpService.get('/usercities');
     };
     /**
-     * Listar todas as tarefas.
+     * Listar as cidades.
      */
-    UserCityService.prototype.searchCities = function () {
-        return this.httpService.get('/cities');
+    UserCityService.prototype.searchCities = function (query, idState) {
+        return this.httpService.get('/cities/search', { params: new Map([["query", query], ["idState", idState]]) });
+    };
+    /**
+     * Listar os estados.
+     */
+    UserCityService.prototype.searchStates = function (query) {
+        return this.httpService.get('/states', { params: new Map([["query", query]]) });
     };
     /**
      * Deletar uma tarefa.
      */
     UserCityService.prototype.delete = function (userCity) {
-        return this.httpService.delete('/usercities', userCity);
+        return this.httpService.delete('/usercities', { data: userCity });
     };
     /**
      * Salvar uma tarefa.
      */
     UserCityService.prototype.save = function (userCity) {
-        return this.httpService.post('/usercities', userCity);
+        userCity.username = this.tokenService.getToken().username;
+        return this.httpService.post('/usercities', { data: userCity });
     };
     return UserCityService;
 }());

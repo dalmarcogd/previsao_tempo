@@ -20,7 +20,7 @@ var LoginComponent = (function () {
     LoginComponent.prototype.doLogin = function (value) {
         console.log(value.username);
         console.log(value.password);
-        this.authService.login(value.username, value.password).catch(function (error) { console.log(error); });
+        this.authService.login(value.username, value.password);
     };
     LoginComponent.prototype.ngOnInit = function () {
         this.form = this.fb.group({

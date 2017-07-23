@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public doLogin(value: any) {
     console.log(value.username);
     console.log(value.password);
-    this.authService.login(value.username, value.password).catch((error) => {console.log(error); });
+    this.authService.login(value.username, value.password);
   }
 
   ngOnInit() {

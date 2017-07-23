@@ -1,30 +1,45 @@
 <div>
     <div id="contentBarTop">
-        <p> Cidades </p>
+        <p><b> Previsão do Tempo </b></p>
     </div>
-    <ngl-modal [(open)]="opened" [size]="size" [directional]="directional">
-        <div body>
-            <ngl-form-element [error]="hasError ? error : null" class="slds-m-top--small">
-                <p>Título:</p>
-                <input nglFormControl [(ngModel)]="userCityCurrent.title" type="text" placeholder="Informe o título..." [required]="required">
-            </ngl-form-element>
-            <ngl-lookup [(value)]="value" [lookup]="searchCities" field="formatted_address" [(pick)]="userCityCurrent.city">
-                <template nglLookupLabel>Cidade:</template>
-                <div nglLookupHeader class="slds-text-body--small">Cidades encontradas...</div>
-                <template nglLookupItem let-ctx>
+    <ngl-modal id="bodyModal" [(open)]="opened" [directional]="directional" [header]="'Cidade'">
+        <div body id="bodyModal">
+            <ngl-lookup label="Estado" [lookup]="searchStates" field="name" [(pick)]="stateCurrent" debounce="0" placeholder="Selecione um estatdo.." [noResultsText]="'Nenhum estado encontrada...'">
+                <template nglLookupItem let-item>
                     <div class="slds-media__body">
-                    <div class="slds-lookup__result-text">{{userCityCurrent.city.name}}</div>
-                    <span class="slds-lookup__result-meta slds-text-body--small">Estado: {{userCityCurrent.city.state.name}}</span>
+                    <div class="slds-lookup__result-text">{{item.name}}</div>
                     </div>
                 </template>
             </ngl-lookup>
+            <ngl-lookup [(value)]="value" [lookup]="searchCities" field="name" [(pick)]="userCityCurrent.city" debounce="0" placeholder="Selecione uma cidade.." [noResultsText]="'Nenhuma cidade encontrada...'">
+                <template nglLookupLabel>Cidade:</template>
+                <template nglLookupItem let-item>
+                    <div class="slds-media__body">
+                    <div class="slds-lookup__result-text">{{item.name}}</div>
+                    </div>
+                </template>
+            </ngl-lookup>
+        </div>
+        <div ng-if="!userCityCurrent.city">
+            <!--<table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Temperatura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{weather.temp}}</td>
+                    </tr>
+                </tbody>
+            </table>-->
         </div>
         <template ngl-modal-footer>
           <button class="slds-button slds-button--neutral" (click)="onCancel()">Cancelar</button>
           <button class="slds-button slds-button--brand" (click)="onSaveConfirm()">Salvar</button>
         </template>
     </ngl-modal>
-    <ng2-smart-table class='form-control' [settings]="settings" [source]="source" (create)="onCreate($event)" (deleteConfirm)="onDeleteConfirm($event)" (edit)="onEdit($event)" noDataMessage="Nenhuma tarefa encontrada...">
+    <ng2-smart-table id="table" class='form-control' [settings]="settings" [source]="source" (create)="onCreate($event)" (deleteConfirm)="onDeleteConfirm($event)" (edit)="onEdit($event)" noDataMessage="Nenhuma cidade encontrada...">
     </ng2-smart-table>
 
 

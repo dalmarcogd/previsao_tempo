@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { CityDTO } from './../model/city/city.dto';
 import { UserCityDTO } from './../model/usercity/usercity.dto';
 import { TokenService } from './../service/token/token.service';
@@ -21,28 +22,36 @@ export class UserCityService {
     /**
      * Listar todas as tarefas.
      */
-    public list() : Promise<UserCityDTO[]> {
+    public list() : Observable<UserCityDTO[]> {
         return this.httpService.get('/usercities');
     }
 
     /**
-     * Listar todas as tarefas.
+     * Listar as cidades.
      */
-    public searchCities() : Promise<CityDTO[]> {
-        return this.httpService.get('/cities');
+    public searchCities(query: string, idState: any) : Observable<CityDTO[]> {
+        return this.httpService.get('/cities/search', {params: new Map([["query", query], ["idState", idState]])});
+    }
+
+    /**
+     * Listar os estados.
+     */
+    public searchStates(query: string) : Observable<CityDTO[]> {
+        return this.httpService.get('/states' , {params: new Map([["query", query]])});
     }
 
     /**
      * Deletar uma tarefa.
      */
-    public delete(userCity: UserCityDTO) : Promise<UserCityDTO[]> {
-        return this.httpService.delete('/usercities', userCity);
+    public delete(userCity: UserCityDTO) : Observable<UserCityDTO[]> {
+        return this.httpService.delete('/usercities', {data: userCity});
     }
 
     /**
      * Salvar uma tarefa.
      */
-    public save(userCity: UserCityDTO) : Promise<UserCityDTO> {
-        return this.httpService.post('/usercities', userCity);
+    public save(userCity: UserCityDTO) : Observable<UserCityDTO> {
+        userCity.username = this.tokenService.getToken().username;
+        return this.httpService.post('/usercities', {data: userCity});
     }
 }

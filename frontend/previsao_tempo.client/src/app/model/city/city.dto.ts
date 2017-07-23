@@ -8,4 +8,8 @@ export class CityDTO extends BaseDTO {
 
   name: string = null;
   state: StateDTO = null;
+
+  public toString() : string {
+    return this.name;
+  }
 }

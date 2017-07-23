@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { ServiceLocator } from './../locator/service.locator';
 /**
  * Created by Guilherme on 06/04/2017.
@@ -32,12 +33,12 @@ export class AuthService {
   /**
    * Efetua a autenticação no servidor, com os parametros recebidos.
    */
-  login(username: string, password: string): Promise<Boolean> {
-    return this.httpService.post('/auth', new AuthCredentials(username, password)).then((data) => {
-        console.log(data);
+  login(username: string, password: string): Observable<Boolean> {
+    let obs = this.httpService.post('/auth', {data: new AuthCredentials(username, password)});
+    obs.subscribe((data: any) => {
         if (data instanceof Object) {
           this.tokenService.setToken(data, new Date());
-          this.router.navigate(['/tasks']);
+          this.router.navigate(['/usercity']);
           return true;
         } else {
           this.tokenService.resetToken();
@@ -46,9 +47,10 @@ export class AuthService {
         }
       }
     );
+    return obs;
   }
 
-  isLoggedIn(): Promise<boolean> {
+  isLoggedIn(): Observable<boolean> {
     return this.tokenService.isTokenValid();
   }
 

@@ -22,6 +22,9 @@ var CityDTO = (function (_super) {
         _this.state = null;
         return _this;
     }
+    CityDTO.prototype.toString = function () {
+        return this.name;
+    };
     return CityDTO;
 }(base_dto_1.BaseDTO));
 exports.CityDTO = CityDTO;

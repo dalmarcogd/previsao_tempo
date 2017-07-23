@@ -1,3 +1,4 @@
+import { AuthGuard } from './../service/auth/auth.guard';
 /**
  * Router do login.
  */
@@ -7,7 +8,8 @@ import {UserCityComponent} from './usercity.component';
 const routes: Routes = [
   {
     path: '',
-    component: UserCityComponent
+    component: UserCityComponent, 
+    canActivate: [AuthGuard]
   }
 ];
 

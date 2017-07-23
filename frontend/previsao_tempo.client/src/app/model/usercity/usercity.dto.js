@@ -18,8 +18,9 @@ var UserCityDTO = (function (_super) {
     __extends(UserCityDTO, _super);
     function UserCityDTO() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.user = null;
+        _this.username = null;
         _this.city = null;
+        _this.cityname = null;
         return _this;
     }
     return UserCityDTO;

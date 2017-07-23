@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = require("rxjs/Observable");
 var token_service_1 = require("./../token/token.service");
 var service_locator_1 = require("./../locator/service.locator");
 var core_1 = require("@angular/core");
@@ -52,7 +53,7 @@ var HttpService = (function () {
         var finalURL = this.formatURL(url);
         console.log('Method delete: ' + finalURL);
         var options = this.buildRequestOptions(headers, config);
-        return this.http.delete(http_constants_1.URL_SERVER + '' + url, options).toPromise().then(this.extractData).catch(function (e) { return _this.handleError(e); });
+        return this.http.delete(http_constants_1.URL_SERVER + '' + url, options).map(this.extractData).catch(function (error) { return _this.handleError(error); });
     };
     /**
      * Realiza um put no endereço especificado.
@@ -63,7 +64,7 @@ var HttpService = (function () {
         var finalURL = this.formatURL(url);
         console.log('Method get: ' + finalURL);
         var options = this.buildRequestOptions(headers, config);
-        return this.http.get(http_constants_1.URL_SERVER + '' + url, options).toPromise().then(this.extractData).catch(function (e) { return _this.handleError(e); });
+        return this.http.get(http_constants_1.URL_SERVER + '' + url, options).map(this.extractData).catch(function (error) { return _this.handleError(error); });
     };
     /**
      * Realiza um put no endereço especificado.
@@ -74,7 +75,7 @@ var HttpService = (function () {
         var finalURL = this.formatURL(url);
         console.log('Method put: ' + finalURL);
         var options = this.buildRequestOptions(headers, config);
-        return this.http.put(http_constants_1.URL_SERVER + '' + url, { name: name }, options).toPromise().then(this.extractData).catch(function (e) { return _this.handleError(e); });
+        return this.http.put(http_constants_1.URL_SERVER + '' + url, { name: name }, options).map(this.extractData).catch(function (error) { return _this.handleError(error); });
     };
     /**
      * Realiza um post no endereço especificado.
@@ -85,7 +86,7 @@ var HttpService = (function () {
         var finalURL = this.formatURL(url);
         console.log('Method post: ' + finalURL);
         var options = this.buildRequestOptions(headers, config);
-        return this.http.post(finalURL, { name: name }, options).toPromise().then(this.extractData).catch(function (e) { return _this.handleError(e); });
+        return this.http.post(finalURL, { name: name }, options).map(this.extractData).catch(function (error) { return _this.handleError(error); });
     };
     /**
      * Método para criação padronizada do RequestOptions
@@ -116,6 +117,7 @@ var HttpService = (function () {
     };
     HttpService.prototype.handleError = function (error) {
         service_locator_1.ServiceLocator.get(application_error_handler_1.ApplicationErrorHandler).handleError(error);
+        return Observable_1.Observable.throw(error);
     };
     return HttpService;
 }());

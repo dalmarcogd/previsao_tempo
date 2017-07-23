@@ -6,11 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = require("rxjs/Observable");
 var service_locator_1 = require("./../locator/service.locator");
 var http_service_1 = require("./../http/http.service");
 var core_1 = require("@angular/core");
 /**
- * Created by Guilherme on 07/04/2017.
+ * Serviço que gerencia o token do usuario
  */
 var TOKEN = 'token';
 var DATE_TOKEN = 'datetoken';
@@ -46,9 +47,9 @@ var TokenService = (function () {
         var value = !!tokenDTO ? tokenDTO.token : null;
         if (!!value) {
             console.log("Valiando: " + value);
-            return this.httpService.put('/auth', new ValidToken(value));
+            return this.httpService.put('/auth', { data: new ValidToken(value) });
         }
-        return new Promise(function () { return false; });
+        return Observable_1.Observable.create(function () { return false; });
     };
     /**
      * Retorna o token to usuário

@@ -1,3 +1,4 @@
+import { AuthGuard } from './service/auth/auth.guard';
 import { NglModule } from 'ng-lightning';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UserCityService } from './usercity/usercity.service';
@@ -34,7 +35,8 @@ import { AppComponent } from './app.component';
               ApplicationErrorHandler,
               MessageService,
               TokenService,
-              UserCityService],
+              UserCityService,
+              AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

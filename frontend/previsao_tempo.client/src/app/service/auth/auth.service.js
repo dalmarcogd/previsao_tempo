@@ -44,11 +44,11 @@ var AuthService = (function () {
      */
     AuthService.prototype.login = function (username, password) {
         var _this = this;
-        return this.httpService.post('/auth', new auth_credentials_1.AuthCredentials(username, password)).then(function (data) {
-            console.log(data);
+        var obs = this.httpService.post('/auth', { data: new auth_credentials_1.AuthCredentials(username, password) });
+        obs.subscribe(function (data) {
             if (data instanceof Object) {
                 _this.tokenService.setToken(data, new Date());
-                _this.router.navigate(['/tasks']);
+                _this.router.navigate(['/usercity']);
                 return true;
             }
             else {
@@ -57,6 +57,7 @@ var AuthService = (function () {
                 return false;
             }
         });
+        return obs;
     };
     AuthService.prototype.isLoggedIn = function () {
         return this.tokenService.isTokenValid();
