@@ -12,5 +12,6 @@ export class UserCityDTO extends BaseDTO {
   city: CityDTO = null;
   cityname: string = null;
   weatherUserCity: WeatherUserCity = null;
+  button: string = "Ver previsão"
   
 }

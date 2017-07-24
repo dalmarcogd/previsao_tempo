@@ -22,6 +22,7 @@ var UserCityDTO = (function (_super) {
         _this.city = null;
         _this.cityname = null;
         _this.weatherUserCity = null;
+        _this.button = "Ver previsão";
         return _this;
     }
     return UserCityDTO;

@@ -49,7 +49,7 @@ var UserCityService = (function () {
      * Deletar uma tarefa.
      */
     UserCityService.prototype.delete = function (userCity) {
-        return this.httpService.delete('/usercities/', { data: userCity.id });
+        return this.httpService.delete('/usercities', { params: new Map([['id', userCity.id]]) });
     };
     /**
      * Salvar uma tarefa.

@@ -44,7 +44,7 @@ export class UserCityService {
      * Deletar uma tarefa.
      */
     public delete(userCity: UserCityDTO) : Observable<UserCityDTO[]> {
-        return this.httpService.delete('/usercities/', {data: userCity.id});
+        return this.httpService.delete('/usercities', {params: new Map([['id', userCity.id]])});
     }
 
     /**
