@@ -1,6 +1,11 @@
 # previsao_tempo
 Projeto para demonstrar as previsões do tempo de determinada cidade.
 
+# Arquitetura Backend
+Na camada de modelagem de entidades e relacionamento foi utilizado o hibernate, par o gerenciamento injeção de dependencia foi utilizado spring e spring-mvc para disponibilizar os recursos.
+# Arquitetura Frontend
+No frontend foi utilizado angular2 para desenvolvimento da aplicação de pagina unica, utilizado o componente ng2-smart-table e a biblioteca de componentes ng-lightning.
+
 # Como utilizar?
 1 - Instalar servidor mysql.<br>
 2 - Executar script = CREATE SCHEMA 'previsao_tempo';<br>
