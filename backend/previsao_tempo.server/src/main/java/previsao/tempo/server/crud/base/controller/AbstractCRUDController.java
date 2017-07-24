@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import previsao.tempo.server.core.exception.ValidationException;
@@ -74,8 +75,8 @@ public abstract class AbstractCRUDController<O extends BaseDTO, E extends BaseEn
      * @param id - {@link Long}
      * @return {@link ResponseEntity}
      */
-    @DeleteMapping(value = "/{id}")
-    public @ResponseBody ResponseEntity<Serializable> deleteById(@PathVariable("id") Long id) {
+    @DeleteMapping(params={"id"})
+    public @ResponseBody ResponseEntity<Serializable> deleteById(@RequestParam("id") Long id) {
         AbstractCRUDService<E, O> service = getService();
         if (id != null) {
             try {
