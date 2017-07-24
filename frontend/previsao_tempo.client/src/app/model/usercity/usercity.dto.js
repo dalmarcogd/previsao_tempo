@@ -21,6 +21,7 @@ var UserCityDTO = (function (_super) {
         _this.username = null;
         _this.city = null;
         _this.cityname = null;
+        _this.weatherUserCity = null;
         return _this;
     }
     return UserCityDTO;

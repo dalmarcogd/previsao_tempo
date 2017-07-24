@@ -21,6 +21,7 @@ var HttpHeaders = (function (_super) {
         _this.append("Content-Type", "application/json");
         _this.append("Accept", "application/json");
         _this.append('Access-Control-Allow-Headers', 'Authorization');
+        _this.append('Access-Control-Allow-Origin', '*');
         return _this;
         //this.append('Access-Control-Allow-Methods', '*');
         //this.append('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');

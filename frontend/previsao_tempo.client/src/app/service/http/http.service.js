@@ -58,6 +58,18 @@ var HttpService = (function () {
     /**
      * Realiza um put no endereço especificado.
      */
+    HttpService.prototype.getOut = function (url, config) {
+        var _this = this;
+        var headers = new http_1.Headers();
+        headers.delete("Content-Type");
+        headers.delete("Accept");
+        console.log('Method get: ' + url);
+        var options = this.buildRequestOptions(headers, config);
+        return this.http.get(url, options).map(this.extractData).catch(function (error) { return _this.handleError(error); });
+    };
+    /**
+     * Realiza um put no endereço especificado.
+     */
     HttpService.prototype.get = function (url, config) {
         var _this = this;
         var headers = this.getConfigHeaders();

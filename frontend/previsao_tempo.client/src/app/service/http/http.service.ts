@@ -4,7 +4,7 @@ import { ApplicationError } from './../error/application.error';
 import { TokenService } from './../token/token.service';
 import { ServiceLocator } from './../locator/service.locator';
 import { Injectable, ErrorHandler } from '@angular/core';
-import { RequestOptions, Http, Response } from '@angular/http';
+import { RequestOptions, Http, Response, Headers } from '@angular/http';
 import { HttpHeaders } from './http.headers';
 
 import 'rxjs/add/operator/toPromise';
@@ -41,6 +41,18 @@ export class HttpService {
     console.log('Method delete: ' + finalURL);
     let options = this.buildRequestOptions(headers, config);
     return this.http.delete(URL_SERVER + '' + url, options).map(this.extractData).catch((error:any) => this.handleError(error));
+  }
+
+  /**
+   * Realiza um put no endereço especificado.
+   */
+  public getOut(url: string, config?: HttpConfigMethod): Observable<any> {
+    let headers = new Headers();
+    headers.delete("Content-Type");
+    headers.delete("Accept");
+    console.log('Method get: ' + url);
+    let options = this.buildRequestOptions(headers, config);
+    return this.http.get(url, options).map(this.extractData).catch((error:any) => this.handleError(error));
   }
 
   /**

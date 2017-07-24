@@ -24,11 +24,14 @@ UserCityModule = __decorate([
             shared_module_1.SharedModule
         ],
         declarations: [
-            usercity_component_1.UserCityComponent
+            usercity_component_1.UserCityComponent,
+            usercity_component_1.ButtonViewComponent
         ],
+        entryComponents: [usercity_component_1.ButtonViewComponent],
         exports: [
             usercity_component_1.UserCityComponent,
-            ng2_smart_table_1.Ng2SmartTableModule
+            ng2_smart_table_1.Ng2SmartTableModule,
+            usercity_component_1.ButtonViewComponent
         ],
         bootstrap: [
             usercity_component_1.UserCityComponent
