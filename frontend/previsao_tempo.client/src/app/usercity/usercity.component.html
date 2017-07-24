@@ -27,14 +27,6 @@
           <button class="slds-button slds-button--brand" (click)="onSaveConfirm()">Salvar</button>
         </template>
     </ngl-modal>
-    <ngl-modal [(open)]="openedPrevisao" [directional]="directional" [header]="'Previsão do tempo'">
-        <div body>
-
-        </div>
-        <template ngl-modal-footer>
-          <button class="slds-button slds-button--brand" (click)="onExitPrevisao()">Sair</button>
-        </template>
-    </ngl-modal>
     <ng2-smart-table id="table" class='form-control' [settings]="settings" [source]="source" (create)="onCreate($event)" (delete)="onDeleteConfirm($event)" (edit)="onEdit($event)" noDataMessage="Nenhuma cidade encontrada...">
     </ng2-smart-table>
 

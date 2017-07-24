@@ -45,7 +45,6 @@ var UserCityComponent = (function () {
                     renderComponent: ButtonViewComponent,
                     onComponentInitFunction: function (instance) {
                         instance.save.subscribe(function (row) {
-                            //this.userCityCurrent = row;
                         });
                     }
                 }
@@ -75,9 +74,6 @@ var UserCityComponent = (function () {
     }
     UserCityComponent.prototype.userCityService = function () {
         return service_locator_1.ServiceLocator.get(usercity_service_1.UserCityService);
-    };
-    UserCityComponent.prototype.httpService = function () {
-        return service_locator_1.ServiceLocator.get(http_service_1.HttpService);
     };
     UserCityComponent.prototype.ngOnInit = function () {
         this.load();
@@ -117,24 +113,10 @@ var UserCityComponent = (function () {
         this.opened = true;
         this.clean();
     };
-    UserCityComponent.prototype.onExitPrevisao = function (event) {
-        this.userCityCurrent = new usercity_dto_1.UserCityDTO();
-        this.openedPrevisao = false;
-    };
     UserCityComponent.prototype.onEdit = function (event) {
         this.userCityCurrent = event.data;
         this.stateCurrent = this.userCityCurrent.city.state;
         this.opened = true;
-        this.loadForecast();
-    };
-    UserCityComponent.prototype.loadForecast = function () {
-        var _this = this;
-        this.httpService().getOut("http://api.openweathermap.org/data/2.5/forecast", { params: new Map([["q", this.userCityCurrent.cityname], ['appid', 'eb8b1a9405e659b2ffc78f0a520b1a46']]) })
-            .subscribe(function (value) {
-            _this.userCityCurrent.weatherUserCity = new weather_usercity_1.WeatherUserCity();
-            _this.userCityCurrent.weatherUserCity.city = value;
-            console.log(_this.userCityCurrent.weatherUserCity.city);
-        });
     };
     UserCityComponent.prototype.onCancel = function () {
         this.userCityCurrent = new usercity_dto_1.UserCityDTO();
@@ -164,13 +146,39 @@ UserCityComponent = __decorate([
 exports.UserCityComponent = UserCityComponent;
 var ButtonViewComponent = (function () {
     function ButtonViewComponent() {
+        this.openedPrevisao = false;
         this.save = new core_1.EventEmitter();
     }
     ButtonViewComponent.prototype.ngOnInit = function () {
         this.renderValue = this.value.toString().toUpperCase();
     };
     ButtonViewComponent.prototype.onClick = function () {
-        this.save.emit(this.rowData);
+        this.loadForecast();
+    };
+    ButtonViewComponent.prototype.getItens = function () {
+        if (this.rowData instanceof usercity_dto_1.UserCityDTO) {
+            if (this.rowData.weatherUserCity != null && this.rowData.weatherUserCity.city != null) {
+                return this.rowData.weatherUserCity.city.list;
+            }
+        }
+        return new Array();
+    };
+    ButtonViewComponent.prototype.loadForecast = function () {
+        var _this = this;
+        if (this.rowData.weatherUserCity == null) {
+            var obs = this.httpService().getOut("http://api.openweathermap.org/data/2.5/forecast", { params: new Map([["q", this.rowData.cityname], ['appid', 'eb8b1a9405e659b2ffc78f0a520b1a46']]) });
+            obs.subscribe(function (value) {
+                _this.rowData.weatherUserCity = new weather_usercity_1.WeatherUserCity();
+                _this.rowData.weatherUserCity.city = value;
+                _this.openedPrevisao = true;
+            });
+        }
+    };
+    ButtonViewComponent.prototype.httpService = function () {
+        return service_locator_1.ServiceLocator.get(http_service_1.HttpService);
+    };
+    ButtonViewComponent.prototype.onExitPrevisao = function (event) {
+        this.openedPrevisao = false;
     };
     return ButtonViewComponent;
 }());
@@ -189,7 +197,7 @@ __decorate([
 ButtonViewComponent = __decorate([
     core_1.Component({
         selector: 'button-view',
-        template: "\n    <button (click)=\"onClick()\">{{ renderValue }}</button>\n  ",
+        template: "\n    <button (click)=\"onClick()\">{{ renderValue }}</button>\n    <ngl-modal [(open)]=\"openedPrevisao\" [directional]=\"directional\" [header]=\"'Previs\u00E3o do tempo'\">\n        <div body>\n          <table style=\"width:100%\">\n            <tr>\n              <th>Data</th>\n              <th>Temperatura min\u00EDma</th> \n              <th>Temperatura m\u00E1xima</th> \n            </tr>\n            <tr *ngFor=\"let item of getItens()\">\n                <td>{{item.dt_txt}}</td>\n                <td>{{(item.main.temp_min - 273.15) | number: '1.2'}} \u00B0C</td>\n                <td>{{(item.main.temp_max - 273.15) | number: '1.2'}} \u00B0C</td>\n            </tr>\n          </table>\n        </div>\n        <template ngl-modal-footer>\n          <button class=\"slds-button slds-button--brand\" (click)=\"onExitPrevisao()\">Sair</button>\n        </template>\n    </ngl-modal>\n  ",
     })
 ], ButtonViewComponent);
 exports.ButtonViewComponent = ButtonViewComponent;

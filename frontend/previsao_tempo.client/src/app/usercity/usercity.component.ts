@@ -6,7 +6,7 @@ import { CityDTO } from './../model/city/city.dto';
 import { UserCityDTO } from './../model/usercity/usercity.dto';
 import { UserCityService } from './usercity.service';
 import { ServiceLocator } from './../service/locator/service.locator';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import {LocalDataSource, ViewCell} from 'ng2-smart-table';
 import {Observable, Observer} from 'rxjs';
 
@@ -42,9 +42,9 @@ export class UserCityComponent implements OnInit {
         title: 'Previsão do tempo',
         type: 'custom',
         renderComponent: ButtonViewComponent,
-        onComponentInitFunction(instance: any) {
+        onComponentInitFunction(instance: ButtonViewComponent) {
           instance.save.subscribe((row:any) => {
-            //this.userCityCurrent = row;
+            
           });
         }
       }
@@ -63,10 +63,6 @@ export class UserCityComponent implements OnInit {
 
   private userCityService() : UserCityService {
     return ServiceLocator.get(UserCityService);
-  }
-
-  private httpService() : HttpService {
-    return ServiceLocator.get(HttpService);
   }
 
   ngOnInit() {
@@ -109,25 +105,10 @@ export class UserCityComponent implements OnInit {
     this.clean();
   }
 
-  onExitPrevisao(event: any): void {
-    this.userCityCurrent = new UserCityDTO();
-    this.openedPrevisao = false;
-  }
-
   onEdit(event: any): void {
     this.userCityCurrent = event.data;
     this.stateCurrent = this.userCityCurrent.city.state;
     this.opened = true;
-    this.loadForecast();
-  }
-
-  loadForecast() {
-    this.httpService().getOut("http://api.openweathermap.org/data/2.5/forecast", {params: new Map([["q", this.userCityCurrent.cityname],['appid','eb8b1a9405e659b2ffc78f0a520b1a46']])})
-                      .subscribe((value:any) => {
-                        this.userCityCurrent.weatherUserCity = new WeatherUserCity();
-                        this.userCityCurrent.weatherUserCity.city = value;
-                        console.log(this.userCityCurrent.weatherUserCity.city);
-                      });
   }
 
   onCancel(): void {
@@ -172,10 +153,30 @@ export class UserCityComponent implements OnInit {
   selector: 'button-view',
   template: `
     <button (click)="onClick()">{{ renderValue }}</button>
+    <ngl-modal [(open)]="openedPrevisao" [directional]="directional" [header]="'Previsão do tempo'">
+        <div body>
+          <table style="width:100%">
+            <tr>
+              <th>Data</th>
+              <th>Temperatura miníma</th> 
+              <th>Temperatura máxima</th> 
+            </tr>
+            <tr *ngFor="let item of getItens()">
+                <td>{{item.dt_txt}}</td>
+                <td>{{(item.main.temp_min - 273.15) | number: '1.2'}} °C</td>
+                <td>{{(item.main.temp_max - 273.15) | number: '1.2'}} °C</td>
+            </tr>
+          </table>
+        </div>
+        <template ngl-modal-footer>
+          <button class="slds-button slds-button--brand" (click)="onExitPrevisao()">Sair</button>
+        </template>
+    </ngl-modal>
   `,
 })
 export class ButtonViewComponent implements ViewCell, OnInit {
   renderValue: string;
+  openedPrevisao: boolean = false;
 
   @Input() value: string | number;
   @Input() rowData: any;
@@ -187,6 +188,34 @@ export class ButtonViewComponent implements ViewCell, OnInit {
   }
 
   onClick() {
-    this.save.emit(this.rowData);
+    this.loadForecast();
+  }
+
+  getItens() : Array<any> {
+    if (this.rowData instanceof UserCityDTO) {
+      if (this.rowData.weatherUserCity != null && this.rowData.weatherUserCity.city != null) {
+        return this.rowData.weatherUserCity.city.list;
+      }
+    }
+    return new Array();
+  }
+
+  loadForecast() {
+    if (this.rowData.weatherUserCity == null) {
+      let obs = this.httpService().getOut("http://api.openweathermap.org/data/2.5/forecast", {params: new Map([["q", this.rowData.cityname],['appid','eb8b1a9405e659b2ffc78f0a520b1a46']])});
+      obs.subscribe((value:any) => {
+              this.rowData.weatherUserCity = new WeatherUserCity();
+              this.rowData.weatherUserCity.city = value;
+              this.openedPrevisao = true;
+      });
+    }
+  }
+
+  private httpService() : HttpService {
+    return ServiceLocator.get(HttpService);
+  }
+
+  onExitPrevisao(event: any): void {
+    this.openedPrevisao = false;
   }
 }
